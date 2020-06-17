@@ -123,14 +123,18 @@ axios.interceptors.request.use(config => {
             if (!isCORS && (!autoDetectCORS || cannotUseCORS)) {
                 const parsedUri = urlUtil.parse(uri, true, true);
                 const params = omitBy(config.params, isNil);
-                config.url = proxyUrl + encodeURIComponent(
-                    urlUtil.format(
-                        assign({}, parsedUri, {
-                            search: null,
-                            query: assign({}, parsedUri.query, params)
-                        })
-                    )
+                
+                let formattedUrl = urlUtil.format(
+                    assign({}, parsedUri, {
+                        search: null,
+                        query: assign({}, parsedUri.query, params)
+                    })
                 );
+                // Prevent double encoding of "+" sign for WFS GetFeature sortBy parameter (geoserver +A / +D)
+                // Need to check for side effects on others queries
+                formattedUrl = formattedUrl.replace("%2B", "+");
+
+                config.url = proxyUrl + encodeURIComponent(formattedUrl);
                 config.params = undefined;
             } else if (autoDetectCORS) {
                 config.autoDetectCORS = true;
