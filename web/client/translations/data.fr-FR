@@ -335,7 +335,7 @@
         "map": {
             "errorLoadingFont": "La famille de polices {family} n'est pas correctement chargée. Certains éléments (comme les symboles dans les marqueurs) peuvent avoir des problèmes de rendu",
             "loading": "Chargement...",
-            "loadingSpinner": "Carte de chargement",
+            "loadingSpinner": "Chargement de la carte",
             "loadingerror": "Erreur de chargement",
             "name": "Nom",
             "description": "Description",
@@ -555,7 +555,7 @@
         "identifyTitle": "Informations de l'objet",
         "identifyNoQueryableLayers": "Aucune couche active rencontrée",
         "identifyRevGeocodeHeader": "Coordonnées",
-        "identifyZoomToFeature": "Zoom aud to feature",
+        "identifyZoomToFeature": "Zoom sur l'objet",
         "identifyStopHighlightingFeatures": "Arrêtez de mettre en évidence les fonctionnalités",
         "identifyHighlightFeatures": "Caractéristiques marquantes",
         "identifyShowCoordinateEditor": "Afficher l'éditeur de coordonnées",
