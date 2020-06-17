@@ -6,6 +6,8 @@ const {isArray} = require('lodash');
 const Message = require('../../../I18N/Message');
 const SecurityUtils = require('../../../../utils/SecurityUtils');
 
+const LocaleUtils = require('../../../../utils/LocaleUtils');
+
 const assign = require('object-assign');
 
 class Legend extends React.Component {
@@ -16,14 +18,16 @@ class Legend extends React.Component {
         legendOptions: PropTypes.string,
         style: PropTypes.object,
         currentZoomLvl: PropTypes.number,
-        scales: PropTypes.array
+        scales: PropTypes.array,
+        transparent: PropTypes.bool
     };
 
     static defaultProps = {
         legendHeigth: 12,
         legendWidth: 12,
         legendOptions: "forceLabels:on;fontSize:10",
-        style: {maxWidth: "100%"}
+        style: {maxWidth: "100%"},
+        transparent: false
     };
     state = {
         error: false
@@ -46,6 +50,7 @@ class Legend extends React.Component {
                 layer.url.replace(/[?].*$/g, '');
 
             let urlObj = urlUtil.parse(url);
+            let locale = LocaleUtils.getUserLocale();
 
             const cleanParams = SecurityUtils.clearNilValuesForParams(layer.params);
             let query = assign({}, {
@@ -58,7 +63,9 @@ class Legend extends React.Component {
                 style: layer.style || null,
                 version: layer.version || "1.3.0",
                 SLD_VERSION: "1.1.0",
-                LEGEND_OPTIONS: props.legendOptions
+                LEGEND_OPTIONS: props.legendOptions,
+                LANGUAGE: locale,
+                TRANSPARENT: props.transparent
             }, layer.legendParams || {},
             SecurityUtils.addAuthenticationToSLD(cleanParams || {}, props.layer),
             cleanParams && cleanParams.SLD_BODY ? {SLD_BODY: cleanParams.SLD_BODY} : {},
